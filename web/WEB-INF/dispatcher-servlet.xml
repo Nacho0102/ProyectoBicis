@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    
+     <!--
+    DECLARACION DE LOS CONTROLADORES
+    -->
+    
+       
+       
+       <bean class="controladores.ControllerMostrarArgumentosBicicletas"
+          id="controllerbicis">
+          <property name="methodNameResolver">
+              <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                  <property name="paramName" value="operacion"/>
+              </bean>
+          </property>  
+    </bean>
+    
+      <bean class="controladores.ControllerBicicletasGeneros"
+          id="controllerbicis02"/>
+      
+       <bean class="controladores.ControllerCarritoCompra"
+          id="controllerbicis03"/>
+       
+       
+        <bean class="controladores.ControllerDetallesBicicletas"
+          id="controllerbicis04"/>
+        
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.htm">indexController</prop>
+                
+<!--                ASOCIAR LAS VISTAS A CADA CONTROLADOR-->
+
+                
+                
+                <prop key="WebMostrarBicicletas.htm">controllerbicis</prop>
+                <prop key="WebMostrarArgumentosBicicletas.htm">controllerbicis</prop>
+                <prop key="WebBicicletasGeneros.htm">controllerbicis02</prop>
+                <prop key="WebCarritoCompra.htm">controllerbicis03</prop>
+                <prop key="WebDetallesBicicleta.htm">controllerbicis04</prop>
+                  
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--
+    The index controller.
+    -->
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+
+    <bean name="pedirNumeroController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="Web04PedirNumero" />    
+   
+        <bean name="pruebaController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="Web09Departamentos" />    
+        
+        <bean name="mostrarSalarioSessionController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="Web12MostrarSalarioEmpleados" />
+        
+       
+         
+</beans>
